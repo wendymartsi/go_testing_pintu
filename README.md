@@ -49,3 +49,8 @@ kubectl port-forward deployment/golang-simple -n testing 8080:8080
 ```
 
 <img width="339" alt="Screen Shot 2022-11-16 at 22 17 25" src="https://user-images.githubusercontent.com/117815873/202219984-969c8c11-80e2-4bca-9d44-c00815d89f83.png">
+
+
+## Authors
+
+- [@wendymartsi](https://www.github.com/wendymartsi)
