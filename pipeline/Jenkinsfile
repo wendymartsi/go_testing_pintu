@@ -1,0 +1,56 @@
+#!/usr/bin/env groovy
+
+pipeline {
+  agent {
+    kubernetes 
+        {
+          idleMinutes 5
+          inheritFrom 'deployment-template-v02'
+          defaultContainer 'image-agent'
+        } 
+
+    } 
+  environment {
+    service_name= "${params.service_name}"
+    service_port= "${params.service_port}"
+    namespace= "${params.namespace}"
+    git_url= "${params.git_url}"
+    branch_name= "${params.branch_name}"    
+    project_name = "${params.project_name}"
+    git_credential= "${params.git_credential}"
+  }
+    stages {
+      stage('clone project') {
+        steps {
+              checkout([$class: 'GitSCM', 
+                branches: [[name: '*/main']],
+                doGenerateSubmoduleConfigurations: false,
+                extensions: [[$class: 'CleanCheckout']],
+                submoduleCfg: [], 
+                userRemoteConfigs: [[url: 'https://gitlab.tanihub.com/wendi.martin/simple-golang.git']]])
+              sh "ls -ltr"
+          }
+        }
+      
+      stage('build go') {
+        steps {
+            sh "docker build -f docker/Dockerfile -t ${project_name}/${service_name} ."
+        }
+      }
+      stage('push image go') {
+        steps {
+            sh "docker push ${project_name}/${service_name}"       
+        }
+      }
+      stage('update manifest') {
+        steps {
+            sh "sed -i 's,image:${project_name}/${service_name},image:${project_name}/${service_name},g' deployment/manifest.yaml"       
+        }
+      }
+      stage('apply manifest') {
+        steps {
+            sh "kubectl appy -f deployment/manifest.yaml -n testing"       
+        }
+      }
+    }
+}
