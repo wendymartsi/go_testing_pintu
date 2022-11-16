@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: golang-simple
-        image: asia.gcr.io/tanifund-tooling-project/golang-simple:latest
+        image: asia.gcr.io/project-name/golang-simple:latest
         resources:
           limits:
             memory: "100Mi"
