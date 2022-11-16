@@ -27,7 +27,7 @@ pipeline {
                 doGenerateSubmoduleConfigurations: false,
                 extensions: [[$class: 'CleanCheckout']],
                 submoduleCfg: [], 
-                userRemoteConfigs: [[url: 'https://gitlab.tanihub.com/wendi.martin/simple-golang.git']]])
+                userRemoteConfigs: [[url: 'https://github.com/wendymartsi/go_testing_pintu.git']]])
               sh "ls -ltr"
           }
         }
