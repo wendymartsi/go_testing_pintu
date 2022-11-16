@@ -30,6 +30,7 @@ This repository contains the golang configuration, starting from the simple proj
 <img width="761" alt="Screen Shot 2022-11-16 at 22 11 15" src="https://user-images.githubusercontent.com/117815873/202218441-d048dcbd-cb3b-4f31-a9dc-99507fcd37c3.png">
 6. Wait project running on cluster
 7. Check pod on the cluster
+
 ```bash
   kubectl get pod -n staging
 ```
